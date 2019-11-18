@@ -271,6 +271,293 @@ static void ScreenResume(void)
 
 #endif // CFG_POWER_SUSPEND
 
+#define	CFG_GPIO_LCD_CS	   74
+#define	CFG_GPIO_LCD_SCL   26
+#define	CFG_GPIO_LCD_SDA   25
+
+static void St7701_Write_Byte(unsigned short temp)
+{
+	unsigned char i;
+	for(i=0;i<9;i++)
+	{
+		ithGpioClear(CFG_GPIO_LCD_SCL);
+		if(temp&0x0100)
+			ithGpioSet(CFG_GPIO_LCD_SDA);
+		else
+			ithGpioClear(CFG_GPIO_LCD_SDA);
+		usleep(5);
+		ithGpioSet(CFG_GPIO_LCD_SCL);
+		usleep(5);
+		temp = temp<<1;
+	}
+}
+
+static void St7701_WriteCommand(uint8_t c)
+{
+	unsigned short temp = 0x00;
+	temp = temp | c;
+	St7701_Write_Byte(temp);
+}
+
+static void St7701_WriteData(uint8_t c)
+{
+	unsigned short temp = 0x100;
+	temp = temp | c;
+	St7701_Write_Byte(temp);
+}
+
+void LCD_Nreset(unsigned char reset)
+{
+	//ithGpioSetOut(CFG_GPIO_LCD_RST);
+	//ithGpioEnable(CFG_GPIO_LCD_RST);
+
+	ithGpioSetOut(CFG_GPIO_LCD_CS);
+	ithGpioEnable(CFG_GPIO_LCD_CS);
+
+	ithGpioSetOut(CFG_GPIO_LCD_SCL);
+	ithGpioEnable(CFG_GPIO_LCD_SCL);
+
+	ithGpioSetOut(CFG_GPIO_LCD_SDA);
+	ithGpioEnable(CFG_GPIO_LCD_SDA);
+
+	ithGpioSet(CFG_GPIO_LCD_CS);
+	ithGpioSet(CFG_GPIO_LCD_SCL);
+	ithGpioSet(CFG_GPIO_LCD_SDA);
+	//if(reset)
+	//	ithGpioSet(CFG_GPIO_LCD_RST);
+	//else
+	//	ithGpioClear(CFG_GPIO_LCD_RST);
+
+	//ithGpioSetOut(CFG_USB_WIFI_POWER);
+	//ithGpioEnable(CFG_USB_WIFI_POWER);
+	//ithGpioSet(CFG_USB_WIFI_POWER);
+}
+
+
+
+void ST7701_PanelInitialCode(void)
+{
+
+    LCD_Nreset (1);
+    usleep (10000);
+    LCD_Nreset (0);
+    usleep (10000);
+    LCD_Nreset (1);
+    usleep (120*1100);
+    ithGpioClear(CFG_GPIO_LCD_CS);
+    St7701_WriteCommand(0x11);
+    usleep (120*1000);
+    St7701_WriteCommand(0xFF);
+    St7701_WriteData(0x77);
+    St7701_WriteData(0x01);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x10);
+    St7701_WriteCommand(0xC0);
+    St7701_WriteData(0x63);
+    St7701_WriteData(0x00);
+    St7701_WriteCommand(0xC1);
+    St7701_WriteData(0x11);
+    St7701_WriteData(0x02);
+    St7701_WriteCommand(0xC2);
+    St7701_WriteData(0x31);
+    St7701_WriteData(0x08);
+    St7701_WriteCommand(0xCC);
+    St7701_WriteData(0x10);
+    St7701_WriteCommand(0xB0);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x05);
+    St7701_WriteData(0x0F);
+    St7701_WriteData(0x0D);
+    St7701_WriteData(0x13);
+    St7701_WriteData(0x07);
+    St7701_WriteData(0x01);
+    St7701_WriteData(0x08);
+    St7701_WriteData(0x09);
+    St7701_WriteData(0x1E);
+    St7701_WriteData(0x05);
+    St7701_WriteData(0x12);
+    St7701_WriteData(0x10);
+    St7701_WriteData(0xB2);
+    St7701_WriteData(0x2F);
+    St7701_WriteData(0x18);
+    St7701_WriteCommand(0xB1);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x0F);
+    St7701_WriteData(0x17);
+    St7701_WriteData(0x0C);
+    St7701_WriteData(0x0D);
+    St7701_WriteData(0x05);
+    St7701_WriteData(0x01);
+    St7701_WriteData(0x08);
+    St7701_WriteData(0x08);
+    St7701_WriteData(0x1E);
+    St7701_WriteData(0x05);
+    St7701_WriteData(0x13);
+    St7701_WriteData(0x11);
+    St7701_WriteData(0xB2);
+    St7701_WriteData(0x2F);
+    St7701_WriteData(0x18);
+    St7701_WriteCommand(0xFF);
+    St7701_WriteData(0x77);
+    St7701_WriteData(0x01);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x11);
+    St7701_WriteCommand(0xB0);
+    St7701_WriteData(0x6C);
+    St7701_WriteCommand(0xB1);
+    St7701_WriteData(0x5D);
+    St7701_WriteCommand(0xB2);
+    St7701_WriteData(0x87);
+    St7701_WriteCommand(0xB3);
+    St7701_WriteData(0x80);
+    St7701_WriteCommand(0xB5);
+    St7701_WriteData(0x47);
+    St7701_WriteCommand(0xB7);
+    St7701_WriteData(0x85);
+    St7701_WriteCommand(0xB8);
+    St7701_WriteData(0x20);
+    St7701_WriteCommand(0xB9);
+    St7701_WriteData(0x10);
+    St7701_WriteCommand(0xC1);
+    St7701_WriteData(0x78);
+    St7701_WriteCommand(0xC2);
+    St7701_WriteData(0x78);
+    St7701_WriteCommand(0xD0);
+    St7701_WriteData(0x88);
+    usleep(120*1000);  
+    St7701_WriteCommand(0xEF);
+    St7701_WriteData(0x08);
+    St7701_WriteData(0x08);
+    St7701_WriteData(0x08);
+    St7701_WriteData(0x45);
+    St7701_WriteData(0x3F);
+    St7701_WriteData(0x54);
+    usleep(100*1000);
+    St7701_WriteCommand(0xE0);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x02);
+    St7701_WriteCommand(0xE1);
+    St7701_WriteData(0x08);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x0A);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x07);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x09);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x33);
+    St7701_WriteData(0x33);
+    St7701_WriteCommand(0xE2);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteCommand(0xE3);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x33);
+    St7701_WriteData(0x33);
+    St7701_WriteCommand(0xE4);
+    St7701_WriteData(0x44);
+    St7701_WriteData(0x44);
+    St7701_WriteCommand(0xE5);
+    St7701_WriteData(0x0E);
+    St7701_WriteData(0x60);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0x10);
+    St7701_WriteData(0x60);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0x0A);
+    St7701_WriteData(0x60);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0x0C);
+    St7701_WriteData(0x60);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0xA0);
+    St7701_WriteCommand(0xE6);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x33);
+    St7701_WriteData(0x33);
+    St7701_WriteCommand(0xE7);
+    St7701_WriteData(0x44);
+    St7701_WriteData(0x44);
+    St7701_WriteCommand(0xE8);
+    St7701_WriteData(0x0D);
+    St7701_WriteData(0x60);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0x0F);
+    St7701_WriteData(0x60);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0x09);
+    St7701_WriteData(0x60);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0x0B);
+    St7701_WriteData(0x60);
+    St7701_WriteData(0xA0);
+    St7701_WriteData(0xA0);
+    St7701_WriteCommand(0xEB);
+    St7701_WriteData(0x02);
+    St7701_WriteData(0x01);
+    St7701_WriteData(0xE4);
+    St7701_WriteData(0xE4);
+    St7701_WriteData(0x44);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x40);
+    St7701_WriteCommand(0xEC);
+    St7701_WriteData(0x02);
+    St7701_WriteData(0x01);
+    St7701_WriteCommand(0xED);
+    St7701_WriteData(0xAB);
+    St7701_WriteData(0x89);
+    St7701_WriteData(0x76);
+    St7701_WriteData(0x54);
+    St7701_WriteData(0x01);
+    St7701_WriteData(0xFF);
+    St7701_WriteData(0xFF);
+    St7701_WriteData(0xFF);
+    St7701_WriteData(0xFF);
+    St7701_WriteData(0xFF);
+    St7701_WriteData(0xFF);
+    St7701_WriteData(0x10);
+    St7701_WriteData(0x45);
+    St7701_WriteData(0x67);
+    St7701_WriteData(0x98);
+    St7701_WriteData(0xBA);
+    St7701_WriteCommand(0xFF);
+    St7701_WriteData(0x77);
+    St7701_WriteData(0x01);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    St7701_WriteData(0x00);
+    usleep(120*1000);
+    St7701_WriteCommand(0x29);
+    usleep(30*1000); 
+
+
+    ithGpioSet(CFG_GPIO_LCD_CS);
+
+}
+
 static int ScreenIoctl(int file, unsigned long request, void* ptr, void* info)
 {
     int size;
@@ -278,6 +565,7 @@ static int ScreenIoctl(int file, unsigned long request, void* ptr, void* info)
     switch (request)
     {
     case ITP_IOCTL_RESET:
+                 ST7701_PanelInitialCode();
 #if defined(CFG_LCD_ENABLE) && !defined(CFG_LCD_INIT_ON_BOOTING)
 
 	#ifdef CFG_LCD_MULTIPLE

@@ -1,0 +1,8 @@
+* configuration
+- Kconfig_9854_hdbsr_480x800
+- Screen : [+] Rotate is enabled or not (ENABLE_ROTATE)
+- Peripheral
+  RTC module : itp_rtc_interal.c
+  [] I2S Output Pin Enable
+- Upgrade
+  Delay time after upgrade finish or error: 250
