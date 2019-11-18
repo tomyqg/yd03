@@ -115,11 +115,11 @@ void SceneInit(void)
     rot = itv_get_rotation();
     
     if (rot == ITU_ROT_90 || rot == ITU_ROT_270)
-        PlayVideo(0, 0, ithLcdGetHeight(), ithLcdGetWidth(), CFG_BOOT_VIDEO_BGCOLOR, CFG_BOOT_VIDEO_VOLUME);
+        /* PlayVideo(0, 0, ithLcdGetHeight(), ithLcdGetWidth(), CFG_BOOT_VIDEO_BGCOLOR, CFG_BOOT_VIDEO_VOLUME); */
     else
-    	PlayVideo(0, 0, ithLcdGetWidth(), ithLcdGetHeight(), CFG_BOOT_VIDEO_BGCOLOR, CFG_BOOT_VIDEO_VOLUME);	
+    	/* PlayVideo(0, 0, ithLcdGetWidth(), ithLcdGetHeight(), CFG_BOOT_VIDEO_BGCOLOR, CFG_BOOT_VIDEO_VOLUME);	 */
 #else
-    PlayVideo(CFG_VIDEO_WINDOW_X_POS, CFG_VIDEO_WINDOW_Y_POS, CFG_VIDEO_WINDOW_WIDTH, CFG_VIDEO_WINDOW_HEIGHT, CFG_BOOT_VIDEO_BGCOLOR, CFG_BOOT_VIDEO_VOLUME);
+    /* PlayVideo(CFG_VIDEO_WINDOW_X_POS, CFG_VIDEO_WINDOW_Y_POS, CFG_VIDEO_WINDOW_WIDTH, CFG_VIDEO_WINDOW_HEIGHT, CFG_BOOT_VIDEO_BGCOLOR, CFG_BOOT_VIDEO_VOLUME); */
 #endif
 #endif
 
@@ -284,7 +284,7 @@ static void LoadScene(void)
     tick2 = SDL_GetTicks();
     printf("itu init time: %dms\n", tick2 - tick1);
 
-    ExternalProcessInit();
+    /* ExternalProcessInit(); */
 #endif
 }
 
@@ -351,10 +351,10 @@ static void ProcessCommand(void)
             LoadScene();            
 #if defined(CFG_PLAY_VIDEO_ON_BOOTING)
             ituScenePreDraw(&theScene, screenSurf);
-            WaitPlayVideoFinish();
+            /* WaitPlayVideoFinish(); */
 #elif defined(CFG_PLAY_MJPEG_ON_BOOTING)
             ituScenePreDraw(&theScene, screenSurf);
-			WaitPlayMjpegFinish();
+			/* WaitPlayMjpegFinish(); */
 #endif
             ituSceneStart(&theScene);
             break;
@@ -431,17 +431,17 @@ static void CheckStorage(void)
     }
 }
 
-static void CheckExternal(void)
-{
-    ExternalEvent ev;
-    int ret = ExternalReceive(&ev);
+/* static void CheckExternal(void) */
+/* { */
+/*     ExternalEvent ev; */
+/*     int ret = ExternalReceive(&ev); */
 
-    if (ret)
-    {
-        ScreenSaverRefresh();
-        ExternalProcessEvent(&ev);
-    }
-}
+/*     if (ret) */
+/*     { */
+/*         ScreenSaverRefresh(); */
+/*         ExternalProcessEvent(&ev); */
+/*     } */
+/* } */
 
 #if defined(CFG_USB_MOUSE) || defined(_WIN32)
 
@@ -483,7 +483,7 @@ int SceneRun(void)
 #ifdef CFG_LCD_ENABLE
         ProcessCommand();
 #endif
-        CheckExternal();
+        /* CheckExternal(); */
         CheckStorage();
 
     #if defined(CFG_USB_MOUSE) || defined(_WIN32)
@@ -548,20 +548,20 @@ int SceneRun(void)
 
                 case SDLK_g:
                     {
-                        ExternalEvent ev;
+                        /* ExternalEvent ev; */
 
-                        ev.type = EXTERNAL_SHOW_MSG;
-                        strcpy(ev.buf1, "test");
+                        /* ev.type = EXTERNAL_SHOW_MSG; */
+                        /* strcpy(ev.buf1, "test"); */
 
-                        ScreenSaverRefresh();
-                        ExternalProcessEvent(&ev);
+                        /* ScreenSaverRefresh(); */
+                        /* ExternalProcessEvent(&ev); */
                     }
                     break;
 
             #endif // _WIN32
                 }
-                if (result && !ScreenIsOff() && !StorageIsInUsbDeviceMode())
-                    AudioPlayKeySound();
+                /* if (result && !ScreenIsOff() && !StorageIsInUsbDeviceMode()) */
+                    /* AudioPlayKeySound(); */
 
                 break;
 
@@ -602,8 +602,8 @@ int SceneRun(void)
                         lastx = ev.button.x;
                         lasty = ev.button.y;
                     }
-                    if (result && !ScreenIsOff() && !StorageIsInUsbDeviceMode())
-                        AudioPlayKeySound();
+                    /* if (result && !ScreenIsOff() && !StorageIsInUsbDeviceMode()) */
+                        /* AudioPlayKeySound(); */
 
                 #ifdef CFG_SCREENSHOT_ENABLE
                     if (ev.button.x < 50 && ev.button.y > CFG_LCD_HEIGHT - 50)
@@ -685,8 +685,8 @@ int SceneRun(void)
                         lastx = ev.tfinger.x;
                         lasty = ev.tfinger.y;
                     }
-                    if (result && !ScreenIsOff() && !StorageIsInUsbDeviceMode())
-                        AudioPlayKeySound();
+                    /* if (result && !ScreenIsOff() && !StorageIsInUsbDeviceMode()) */
+                        /* AudioPlayKeySound(); */
 
                 #ifdef CFG_SCREENSHOT_ENABLE
                     if (ev.tfinger.x < 50 && ev.tfinger.y > CFG_LCD_HEIGHT - 50)

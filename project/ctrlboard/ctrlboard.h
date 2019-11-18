@@ -25,73 +25,6 @@ extern "C" {
  *  @{
  */
 
-typedef int (*AudioPlayCallback)(int state);
-
-/**
- * Initializes audio module.
- */
-void AudioInit(void);
-
-/**
- * Exits audio module.
- */
-void AudioExit(void);
-
-/**
- * Plays the specified wav file.
- *
- * @param filename The specified wav file to play.
- * @param func The callback function.
- * @return 0 for success, otherwise failed.
- */
-int AudioPlay(char* filename, AudioPlayCallback func);
-
-/**
- * Stops playing sound.
- */
-void AudioStop(void);
-
-int AudioPlayMusic(char* filename, AudioPlayCallback func);
-
-/**
- * Plays keypad sound.
- */
-void AudioPlayKeySound(void);
-void AudioPauseKeySound(void);
-void AudioResumeKeySound(void);
-
-/**
- * Sets the volume of keypad sound.
- *
- * @param level the percentage of volume.
- */
-void AudioSetKeyLevel(int level);
-
-/**
- * Mutes all audio.
- */
-void AudioMute(void);
-
-/**
- * Un-mutes all audio.
- */
-void AudioUnMute(void);
-
-/**
- * Determines whether this audio is muted or not.
- *
- * @return true muted, false otherwise.
- */
-bool AudioIsMuted(void);
-
-bool AudioIsPlaying(void);
-
-void AudioSetVolume(int level);
-void AudioSetLevel(int level);
-int AudioGetVolume(void);
-
-/** @} */ // end of ctrlboard_audio
-
 /** @defgroup ctrlboard_config Configuration
  *  @{
  */
@@ -192,73 +125,6 @@ void ConfigUpdateCrc(char* filepath);
 void ConfigSave(void);
 
 /** @} */ // end of ctrlboard_config
-
-/** @defgroup ctrlboard_external External
- *  @{
- */
-#define EXTERNAL_BUFFER_SIZE 64 ///< External buffer size
-
-typedef enum
-{
-    EXTERNAL_SHOW_MSG,  ///< Show message
-    EXTERNAL_TEST0,     ///< Test #0
-    EXTERNAL_TEST1,     ///< Test #1
-    EXTERNAL_TEST2,     ///< Test #2
-    EXTERNAL_TEST3,     ///< Test #3
-    EXTERNAL_TEST4,     ///< Test #4
-    EXTERNAL_TEST5      ///< Test #5
-} ExternalEventType;
-
-typedef struct
-{
-    ExternalEventType type;
-    int arg1;
-    int arg2;
-    int arg3;
-    uint8_t buf1[EXTERNAL_BUFFER_SIZE];
-
-} ExternalEvent;
-
-/**
- * Initializes external module.
- */
-void ExternalInit(void);
-
-/**
- * Exits external module.
- */
-void ExternalExit(void);
-
-/**
- * Receives external module event.
- *
- * @param ev The external event.
- * @return 0 for no event yet, otherwise for event occured.
- */
-int ExternalReceive(ExternalEvent* ev);
-
-/**
- * Sends external module event.
- *
- * @param ev The external event.
- * @return 0 for success, otherwise for failure.
- */
-int ExternalSend(ExternalEvent* ev);
-
-/**
- * Initializes external process module.
- */
-void ExternalProcessInit(void);
-
-/**
- * Processes external module event.
- *
- * @param ev The external event.
- * @return 0 for no event yet, otherwise for event occured.
- */
-void ExternalProcessEvent(ExternalEvent* ev);
-
-/** @} */ // end of ctrlboard_external
 
 /** @defgroup ctrlboard_network Network
  *  @{
@@ -545,16 +411,6 @@ void WebServerInit(void);
 void WebServerExit(void);
 
 /** @} */ // end of ctrlboard_webserver
-
-void PlayVideo(int x, int y, int width, int height, int bgColor, int volume);
-void WaitPlayVideoFinish(void);
-
-void PlayMjpeg(int x, int y, int width, int height, int bgColor, int volume);
-void WaitPlayMjpegFinish(void);
-
-#ifdef	CFG_DYNAMIC_LOAD_TP_MODULE
-void DynamicLoadTpModule(void);
-#endif
 
 #ifdef __cplusplus
 }

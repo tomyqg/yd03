@@ -109,11 +109,11 @@ endif()
     )
     
 add_executable(${CMAKE_PROJECT_NAME}
-    audio.c
+    # audio.c
     config.c
     ctrlboard.h
-    external.c
-    external_process.c
+    # external.c
+    # external_process.c
     function_table.c
     main.c
     photo.c
@@ -162,10 +162,10 @@ endif()
 
 # files
 configure_file(${PROJECT_SOURCE_DIR}/project/${CMAKE_PROJECT_NAME}/ctrlboard.ini ${CMAKE_BINARY_DIR}/data/public/ctrlboard.ini COPYONLY)
-file(COPY
-    ${PROJECT_SOURCE_DIR}/project/${CMAKE_PROJECT_NAME}/sounds
-    DESTINATION ${CMAKE_BINARY_DIR}/data/private
-    )
+# file(COPY
+    # ${PROJECT_SOURCE_DIR}/project/${CMAKE_PROJECT_NAME}/sounds
+    # DESTINATION ${CMAKE_BINARY_DIR}/data/private
+    # )
 
 if (DEFINED CFG_LCD_MULTIPLE)
     file(COPY
@@ -225,10 +225,10 @@ foreach (src ${files})
 endforeach()
 
 # screen saver
-file(COPY
-    ${PROJECT_SOURCE_DIR}/project/${CMAKE_PROJECT_NAME}/screensaver.jpg
-    DESTINATION ${CMAKE_BINARY_DIR}/data/public
-    )
+# file(COPY
+    # ${PROJECT_SOURCE_DIR}/project/${CMAKE_PROJECT_NAME}/screensaver.jpg
+    # DESTINATION ${CMAKE_BINARY_DIR}/data/public
+    # )
 
 # codec
 if (DEFINED CFG_COMPRESS_AUDIO_PLUGIN)

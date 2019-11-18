@@ -11,13 +11,14 @@ config CTRLBOARD
     select HAVE_LCD
     select HAVE_GRAPHICS
     select HAVE_AUDIO
+    select HAVE_VIDEO
 
 config CMAKE_SOURCE_DIR
 	string
 	option env="CMAKE_SOURCE_DIR"
 
 config RAM_SIZE
-    default "0x4000000"
+    default "0x1000000"
 
 config RAM_INIT_SCRIPT
     default "IT9079A1_Initial_DDR2_Mem_tiling_pitch2048_360MHZ.scr"
@@ -43,13 +44,13 @@ config LCD_ENABLE
 if !LCD_MULTIPLE
 
 config LCD_WIDTH
-    default "480"
+    default "800"
 
 config LCD_HEIGHT
-    default "272"
+    default "480"
 
 config LCD_PITCH
-    default "960"
+    default "1600"
 
 config LCD_INIT_SCRIPT
     default "IT9850_LCD_800_480_innolux_7inch_565.txt.in"
@@ -60,6 +61,9 @@ config CMDQ_ENABLE
     def_bool y
 
 config AUDIO_ENABLE
+    def_bool y
+
+config VIDEO_ENABLE
     def_bool y
 
 config SD0_ENABLE
@@ -86,8 +90,8 @@ config TOUCH_ENABLE
 config DEF_IIC0_GPIO_CONFIG_2
     def_bool y
 
-config NET_ENABLE
-    def_bool n
+#config NET_ENABLE
+#    def_bool n
 
 config DEF_DBG_UART1
     def_bool y
@@ -137,9 +141,6 @@ config BUILD_PYINPUT
 if NET_ENABLE
 
 config NET_ETHERNET
-    def_bool y
-
-config NET_HTTP
     def_bool y
 
 config BUILD_MICROHTTPD
@@ -200,7 +201,7 @@ menu "Display Control Board"
     config ITU_PATH
         string "ITU files path"
         depends on !LCD_MULTIPLE
-        default "itu/480x272"
+        default "itu/800x480"
         help
             ITU files path
         help_cht
@@ -228,5 +229,5 @@ menu "Display Control Board"
             圖形顯示更新。
         help_chs
             图形显示更新。
-            
+
 endmenu

@@ -53,11 +53,6 @@ retry_backup:
     ioctl(ITP_DEVICE_BACKLIGHT, ITP_IOCTL_RESET, NULL);
 #endif // CFG_LCD_MULTIPLE
 
-#ifdef	CFG_DYNAMIC_LOAD_TP_MODULE
-	//This function must be in front of SDL_Init().
-	DynamicLoadTpModule();
-#endif
-
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
         printf("Couldn't initialize SDL: %s\n", SDL_GetError());
 
@@ -73,9 +68,9 @@ retry_backup:
 #endif // CFG_NET_ENABLE
 
     ScreenInit();
-    ExternalInit();
+    /* ExternalInit(); */
     StorageInit();
-    AudioInit();
+    /* AudioInit(); */
     PhotoInit();
 
     SceneInit();
@@ -87,8 +82,8 @@ retry_backup:
     ioctl(ITP_DEVICE_DRIVE, ITP_IOCTL_EXIT, NULL);
 
     PhotoExit();
-    AudioExit();
-    ExternalExit();
+    /* AudioExit(); */
+    /* ExternalExit(); */
 
 #ifdef CFG_NET_ENABLE
     if (ret != QUIT_UPGRADE_WEB)
