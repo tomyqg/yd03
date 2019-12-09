@@ -3,6 +3,7 @@ data
 doc
 tool
 win32
+UI
 project/airconditioner2
 project/alt_cpu_it9850
 project/bootloader

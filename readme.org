@@ -6,3 +6,29 @@
   [] I2S Output Pin Enable
 - Upgrade
   Delay time after upgrade finish or error: 250
+* TODO
+** UI评估
+*** 切图
+以下序号对应JPG文件里的列，凡切出的图片，统一为PNG格式。
+一个页面的内容放在一个独立文件夹内。
+图片以尺寸大小+左下角位置信息命名，相同命名的加上数字后缀。
+切出的图片均无需带有文字字体，但要在相应页文件夹内作一份字体、大小及其中心位置信息的描述性说明。
+像素单位统一用PX
+
+1.左边有三张小页，分别切出三张页面背景图，不带文字。右边上小点，切出两张背景透明的图，一个白底一个灰底。
+2.3.4. 切出图标元素。右侧弧线切出背景透明的矩形块。
+4.5.6. 无规律的动图效果要做中间过度图片，细腻度以中间过度图片数量为准，可先做成5到10张。
+       绕中心旋转的动图，按同心元素切出背景透明的图片，图片命名加上旋转方向后缀（顺时针：-cw；逆时针：-ccw）。
+*** 方案
+**** 多字体支持
+1. [[file:project/ctrlboard/scene.c::144]]
+ituFtLoadFont(1, CFG_PRIVATE_DRIVE ":/font/AvenirLTStd-Roman.ttf", ITU_GLYPH_8BPP);
+
+2. [[file:project/ctrlboard/CMakeLists.txt::219]]
+file(COPY
+    ${PROJECT_SOURCE_DIR}/data/font/AvenirLTStd-Roman.ttf
+    DESTINATION ${CMAKE_BINARY_DIR}/data/private/font
+    )
+3. 在ITU中添加第二字体的文字
+**** scalecoverflow
+**** sprite animation

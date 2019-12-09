@@ -141,6 +141,7 @@ void SceneInit(void)
 
     ituFtInit();
     ituFtLoadFont(0, CFG_PRIVATE_DRIVE ":/font/" CFG_FONT_FILENAME, ITU_GLYPH_8BPP);
+    ituFtLoadFont(1, CFG_PRIVATE_DRIVE ":/font/AvenirLTStd-Roman.ttf", ITU_GLYPH_8BPP);
 
     //ituSceneInit(&theScene, NULL);
 	ituSceneSetFunctionTable(&theScene, actionFunctions);

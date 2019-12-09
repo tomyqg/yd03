@@ -46,7 +46,7 @@ config DCPS_ENABLE
     def_bool y
 
 config FONT_FILENAME
-    default "wqyMicroHeiProportional.ttf"
+    default "founder_lanting_black_simplified_GBK.ttf"
 
 config BACKLIGHT_ENABLE
     def_bool y

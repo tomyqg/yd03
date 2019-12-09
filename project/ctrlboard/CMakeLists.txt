@@ -216,6 +216,10 @@ file(COPY
     ${PROJECT_SOURCE_DIR}/data/font/${CFG_FONT_FILENAME}
     DESTINATION ${CMAKE_BINARY_DIR}/data/private/font
     )
+file(COPY
+    ${PROJECT_SOURCE_DIR}/data/font/AvenirLTStd-Roman.ttf
+    DESTINATION ${CMAKE_BINARY_DIR}/data/private/font
+    )
 
 # web
 file(GLOB files ${PROJECT_SOURCE_DIR}/project/${CMAKE_PROJECT_NAME}/web/*.*)
