@@ -256,7 +256,7 @@ repartition:
         }
     }
 
-#ifndef _WIN32
+#if !defined(_WIN32) && defined(CFG_NOR_ENABLE)
     if (par.disk == ITP_DISK_NOR && par.count > 3)
     {
     #if defined(CFG_NOR_ENABLE) && CFG_NOR_CACHE_SIZE > 0

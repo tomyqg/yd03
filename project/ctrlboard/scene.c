@@ -103,7 +103,7 @@ void SceneInit(void)
     ituSceneInit(&theScene, NULL);
 
 #ifdef CFG_ENABLE_ROTATE
-    ituSceneSetRotation(&theScene, ITU_ROT_90, ithLcdGetWidth(), ithLcdGetHeight());
+    ituSceneSetRotation(&theScene, ITU_ROT_270, ithLcdGetWidth(), ithLcdGetHeight());
 #endif
 
 #ifdef CFG_VIDEO_ENABLE

@@ -1,10 +1,13 @@
 * configuration
 - Kconfig_9854_hdbsr_480x800
 - Screen : [+] Rotate is enabled or not (ENABLE_ROTATE)
+  [[file:project/ctrlboard/scene.c::106]]
+  ituSceneSetRotation(&theScene, ITU_ROT_270, ithLcdGetWidth(), ithLcdGetHeight());
 - Peripheral
   RTC module : itp_rtc_interal.c
   [] I2S Output Pin Enable
 - Upgrade
+  [] Delete package file after upgrade finish or error
   Delay time after upgrade finish or error: 250
 * TODO
 ** UI评估
@@ -30,5 +33,24 @@ file(COPY
     DESTINATION ${CMAKE_BINARY_DIR}/data/private/font
     )
 3. 在ITU中添加第二字体的文字
+**** 转270度
+file:project/ctrlboard/scene.c::106
+ituSceneSetRotation(&theScene, ITU_ROT_270, ithLcdGetWidth(), ithLcdGetHeight());
+**** 烧录log通过串口打印
+file:project/bootloader/main.c::472
+comments 472-504
+  ==> #if defined(CFG_LCD_ENABLE) && defined(0)
 **** scalecoverflow
 **** sprite animation
+**** 支持NANDFLASH
+- 补丁
+  file:sdk/share/upgrade/ug_partition.c::259
+  #if !defined(_WIN32) && defined(CFG_NOR_ENABLE)
+- Kconfig
+  File=> Load
+  SDK\build\_presettings => _config_spi_nand_boot
+  載入此檔案會自動設定 NAND flash 設定
+  另外 W25N01GVZEIG 須設定如下圖所示，在 Storage 類別的 Enable SPI NAND Boot 選項中，需選擇 Address HAS Dummy Byte
+- nandflash 烧录
+  先烧录 build/openrtos/ctrlboard/project/bootloader/kpros.sys
+  然后U盘升级
