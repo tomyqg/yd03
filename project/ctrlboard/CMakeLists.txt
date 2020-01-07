@@ -114,6 +114,9 @@ add_executable(${CMAKE_PROJECT_NAME}
     ctrlboard.h
     # external.c
     # external_process.c
+    modbus_slave.c
+    global.c
+    crc16.c
     function_table.c
     main.c
     photo.c

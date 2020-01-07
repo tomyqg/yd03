@@ -286,7 +286,7 @@
       <Property name="Size">800, 480</Property>
     </Object>
     <Property name="Action01">Function,Enter,LogoOnEnter,</Property>
-    <Property name="Action02">Goto,Enter,Layer1,</Property>
+    <Property name="Action02">Function,Timer,logo_timer,</Property>
     <Property name="ClientSize">800, 480</Property>
     <Property name="Name">logoLayer</Property>
   </Object>

@@ -13,6 +13,9 @@
     #include "openrtos/task.h"
 #endif
 
+extern void modbus_slave_init(void);
+extern void modbus_slave_exit(void);
+
 int SDL_main(int argc, char *argv[])
 {
     int ret = 0;
@@ -71,6 +74,7 @@ retry_backup:
     /* ExternalInit(); */
     StorageInit();
     /* AudioInit(); */
+    modbus_slave_init();
     PhotoInit();
 
     SceneInit();
@@ -82,6 +86,7 @@ retry_backup:
     ioctl(ITP_DEVICE_DRIVE, ITP_IOCTL_EXIT, NULL);
 
     PhotoExit();
+    modbus_slave_exit();
     /* AudioExit(); */
     /* ExternalExit(); */
 
