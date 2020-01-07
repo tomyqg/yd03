@@ -54,3 +54,9 @@ comments 472-504
 - nandflash 烧录
   先烧录 build/openrtos/ctrlboard/project/bootloader/kpros.sys
   然后U盘升级
+**** 关键文件夹
+xpl build/win32
+xpl build/openrtos
+xpl build/openrtos/ctrlboard/project/ctrlboard
+xpl project/ctrlboard
+

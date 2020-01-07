@@ -263,7 +263,7 @@
       </Object>
       <Property name="Delay">200</Property>
       <Property name="Repeat">True</Property>
-      <Property name="Playing">False</Property>
+      <Property name="Playing">True</Property>
       <Property name="Progress">False</Property>
       <Property name="Action01">None,Stopped,,</Property>
       <Property name="Action02">None,Stopped,,</Property>

@@ -11,17 +11,23 @@ static ITUSprite* Sprite;
 
 bool LogoOnEnter(ITUWidget* widget, char* param)
 {
-    Sprite = ituSceneFindWidget(&theScene, "Sprite"); assert(Sprite);
+    if (!Sprite) {
+        Sprite = ituSceneFindWidget(&theScene, "Sprite"); assert(Sprite);
+    }
     return true;
 }
 
 bool logo_timer(ITUWidget* widget, char* param)
 {
     int value = level0;
-    if (value < 10) ituSpriteGoto(Sprite, value);
-    return true;
+    if (value < 10) {
+        ituSpriteGoto(Sprite, value);
+        return true;
+    }
+    return false;
 }
 
 void LogoReset(void)
 {
+    Sprite = NULL;
 }
