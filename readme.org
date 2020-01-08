@@ -41,6 +41,7 @@ file:project/bootloader/main.c::472
 comments 472-504
   ==> #if defined(CFG_LCD_ENABLE) && defined(0)
 **** scalecoverflow
+file:sdk/include/ite/itu.h::751
 **** sprite animation
 **** 支持NANDFLASH
 - 补丁
