@@ -70,7 +70,7 @@ bool ituScaleCoverFlowUpdate(ITUWidget* widget, ITUEvent ev, int arg1, int arg2,
 			if (ituWidgetIsInside(widget, x, y))
             {
                 result = true;
-				return result;
+				/* return result; */
             }
         }
     }

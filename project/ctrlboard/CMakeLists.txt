@@ -237,6 +237,15 @@ endforeach()
     # DESTINATION ${CMAKE_BINARY_DIR}/data/public
     # )
 
+file(COPY
+    ${PROJECT_SOURCE_DIR}/project/${CMAKE_PROJECT_NAME}/itu/800x480/ui/main
+    DESTINATION ${CMAKE_BINARY_DIR}/data/public
+    PATTERN "c_selected.png" EXCLUDE
+    PATTERN "c_unselected.png" EXCLUDE
+    PATTERN "selected.png" EXCLUDE
+    PATTERN "unselected.png" EXCLUDE
+    )
+
 # codec
 if (DEFINED CFG_COMPRESS_AUDIO_PLUGIN)
     if (CFG_CHIP_FAMILY STREQUAL 9850)
