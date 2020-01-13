@@ -19,6 +19,8 @@ static ITUIcon* mainTopIconMid;
 static ITUIcon* mainBotIconBig;
 static ITUIcon* mainBotIconMid;
 
+static ITULayer* setupLayer;
+
 static int pre;
 
 bool mainOnEnter(ITUWidget* widget, char* param)
@@ -35,7 +37,9 @@ bool mainOnEnter(ITUWidget* widget, char* param)
         mainTopIconMid = ituSceneFindWidget(&theScene, "mainTopIconMid"); assert(mainTopIconMid);
         mainBotIconBig = ituSceneFindWidget(&theScene, "mainBotIconBig"); assert(mainBotIconBig);
         mainBotIconMid = ituSceneFindWidget(&theScene, "mainBotIconMid"); assert(mainBotIconMid);
+        setupLayer = ituSceneFindWidget(&theScene, "setupLayer"); assert(setupLayer);
     }
+    ituAnimationPlay(topBackAnimation, 0); ituAnimationPlay(botBackAnimation, 0);
     pre = level0;
     return true;
 }
@@ -71,6 +75,11 @@ bool main_timer(ITUWidget* widget, char* param)
     cnt = 0;
     level0--;
 #endif
+
+#ifndef WIN32
+    if (level1)
+#endif
+        ituLayerGoto(setupLayer);
 
     if (pre == level0) return false;
 
