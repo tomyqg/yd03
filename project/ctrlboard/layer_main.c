@@ -14,10 +14,16 @@ static ITUAnimation* botBackAnimation;
 static ITUIcon* selectedIcon;
 static ITUIcon* unselectedIcon1;
 static ITUIcon* unselectedIcon2;
-static ITUIcon* mainTopIconBig;
-static ITUIcon* mainTopIconMid;
-static ITUIcon* mainBotIconBig;
-static ITUIcon* mainBotIconMid;
+static ITUBackground* mainTopBackgroundBig;
+static ITUBackground* mainTopBackgroundMid;
+static ITUBackground* mainBotBackgroundBig;
+static ITUBackground* mainBotBackgroundMid;
+static ITUText* mainBotTextBig;
+static ITUText* mainTopTextBig;
+static ITUText* mainBotTextMid;
+static ITUText* mainTopTextMid;
+static ITUText* botBackText;
+static ITUText* topBackText;
 
 static ITULayer* setupLayer;
 
@@ -33,10 +39,16 @@ bool mainOnEnter(ITUWidget* widget, char* param)
         selectedIcon = ituSceneFindWidget(&theScene, "selectedIcon"); assert(selectedIcon);
         unselectedIcon1 = ituSceneFindWidget(&theScene, "unselectedIcon1"); assert(unselectedIcon1);
         unselectedIcon2 = ituSceneFindWidget(&theScene, "unselectedIcon2"); assert(unselectedIcon2);
-        mainTopIconBig = ituSceneFindWidget(&theScene, "mainTopIconBig"); assert(mainTopIconBig);
-        mainTopIconMid = ituSceneFindWidget(&theScene, "mainTopIconMid"); assert(mainTopIconMid);
-        mainBotIconBig = ituSceneFindWidget(&theScene, "mainBotIconBig"); assert(mainBotIconBig);
-        mainBotIconMid = ituSceneFindWidget(&theScene, "mainBotIconMid"); assert(mainBotIconMid);
+        mainTopBackgroundBig = ituSceneFindWidget(&theScene, "mainTopBackgroundBig"); assert(mainTopBackgroundBig);
+        mainTopBackgroundMid = ituSceneFindWidget(&theScene, "mainTopBackgroundMid"); assert(mainTopBackgroundMid);
+        mainBotBackgroundBig = ituSceneFindWidget(&theScene, "mainBotBackgroundBig"); assert(mainBotBackgroundBig);
+        mainBotBackgroundMid = ituSceneFindWidget(&theScene, "mainBotBackgroundMid"); assert(mainBotBackgroundMid);
+        mainBotTextBig = ituSceneFindWidget(&theScene, "mainBotTextBig"); assert(mainBotTextBig);
+        mainTopTextBig = ituSceneFindWidget(&theScene, "mainTopTextBig"); assert(mainTopTextBig);
+        mainBotTextMid = ituSceneFindWidget(&theScene, "mainBotTextMid"); assert(mainBotTextMid);
+        mainTopTextMid = ituSceneFindWidget(&theScene, "mainTopTextMid"); assert(mainTopTextMid);
+        botBackText = ituSceneFindWidget(&theScene, "botBackText"); assert(botBackText);
+        topBackText = ituSceneFindWidget(&theScene, "topBackText"); assert(topBackText);
         setupLayer = ituSceneFindWidget(&theScene, "setupLayer"); assert(setupLayer);
     }
     ituAnimationPlay(topBackAnimation, 0); ituAnimationPlay(botBackAnimation, 0);
@@ -68,6 +80,7 @@ static void load(FILE* f, ITUIcon* icon1, ITUIcon* icon2)
 bool main_timer(ITUWidget* widget, char* param)
 {
     FILE *fu, *fd;
+    char *mode_text[3] = {"专业模式", "智能菜单", "厨房助手"};
 
 #ifdef WIN32
     static int cnt;
@@ -78,8 +91,8 @@ bool main_timer(ITUWidget* widget, char* param)
 
 #ifndef WIN32
     if (level1)
-#endif
         ituLayerGoto(setupLayer);
+#endif
 
     if (pre == level0) return false;
 
@@ -88,24 +101,33 @@ bool main_timer(ITUWidget* widget, char* param)
         ituWidgetSetX(unselectedIcon1, 744); ituWidgetSetY(unselectedIcon1, 195);
         ituWidgetSetX(selectedIcon,    742); ituWidgetSetY(selectedIcon,    220);
         ituWidgetSetX(unselectedIcon2, 744); ituWidgetSetY(unselectedIcon2, 248);
+        ituTextSetString(mainBotTextBig, mode_text[2]); ituTextSetString(mainTopTextBig, mode_text[0]);
+        ituTextSetString(mainBotTextMid, mode_text[2]); ituTextSetString(mainTopTextMid, mode_text[0]);
+        ituTextSetString(botBackText, mode_text[0]); ituTextSetString(topBackText, mode_text[1]);
         fu = fopen(CFG_PUBLIC_DRIVE ":/main/kitchen_helper.png", "rb"); fd = fopen(CFG_PUBLIC_DRIVE ":/main/pro_mode.png", "rb");
         break;
     case 1:
         ituWidgetSetX(unselectedIcon1, 744); ituWidgetSetY(unselectedIcon1, 195);
         ituWidgetSetX(unselectedIcon2, 744); ituWidgetSetY(unselectedIcon2, 222);
         ituWidgetSetX(selectedIcon,    742); ituWidgetSetY(selectedIcon,    246);
+        ituTextSetString(mainBotTextBig, mode_text[0]); ituTextSetString(mainTopTextBig, mode_text[1]);
+        ituTextSetString(mainBotTextMid, mode_text[0]); ituTextSetString(mainTopTextMid, mode_text[1]);
+        ituTextSetString(botBackText, mode_text[1]); ituTextSetString(topBackText, mode_text[2]);
         fu = fopen(CFG_PUBLIC_DRIVE ":/main/pro_mode.png", "rb"); fd = fopen(CFG_PUBLIC_DRIVE ":/main/smart_mode.png", "rb");
         break;
     case 0:
         ituWidgetSetX(selectedIcon,    742); ituWidgetSetY(selectedIcon,    193);
         ituWidgetSetX(unselectedIcon1, 744); ituWidgetSetY(unselectedIcon1, 222);
         ituWidgetSetX(unselectedIcon2, 744); ituWidgetSetY(unselectedIcon2, 248);
+        ituTextSetString(mainBotTextBig, mode_text[1]); ituTextSetString(mainTopTextBig, mode_text[2]);
+        ituTextSetString(mainBotTextMid, mode_text[1]); ituTextSetString(mainTopTextMid, mode_text[2]);
+        ituTextSetString(botBackText, mode_text[2]); ituTextSetString(topBackText, mode_text[0]);
         fu = fopen(CFG_PUBLIC_DRIVE ":/main/smart_mode.png", "rb"); fd = fopen(CFG_PUBLIC_DRIVE ":/main/kitchen_helper.png", "rb");
     default:
         break;
     }
-    load(fu, mainTopIconBig, mainTopIconMid);
-    load(fd, mainBotIconBig, mainBotIconMid);
+    load(fu, &mainTopBackgroundBig->icon, &mainTopBackgroundMid->icon);
+    load(fd, &mainBotBackgroundBig->icon, &mainBotBackgroundMid->icon);
 
     ituAnimationStop(mainTopAnimation); ituAnimationStop(mainBotAnimation);
     ituAnimationStop(topBackAnimation); ituAnimationStop(botBackAnimation);

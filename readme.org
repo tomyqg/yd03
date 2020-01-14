@@ -61,3 +61,6 @@ xpl build/openrtos
 xpl build/openrtos/ctrlboard/project/ctrlboard
 xpl project/ctrlboard
 
+**** otf -> ttf
+https://cloudconvert.com/otf-to-ttf
+https://www.fontke.com/tool/convfont/
