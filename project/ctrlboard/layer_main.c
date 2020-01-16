@@ -82,17 +82,16 @@ bool main_timer(ITUWidget* widget, char* param)
     FILE *fu, *fd;
     char *mode_text[3] = {"专业模式", "智能菜单", "厨房助手"};
 
-#ifdef WIN32
     static int cnt;
-    if (++cnt < 50) return false;
+    if (++cnt < 15) return false;
     cnt = 0;
-    level0--;
-#endif
 
-#ifndef WIN32
+#ifdef WIN32
+    level0--;
+#else
     if (level1)
-        ituLayerGoto(setupLayer);
 #endif
+        ituLayerGoto(setupLayer);
 
     if (pre == level0) return false;
 
