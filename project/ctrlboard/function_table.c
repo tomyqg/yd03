@@ -9,6 +9,9 @@ extern bool main_timer(ITUWidget* widget, char* param);
 extern bool setupOnEnter(ITUWidget* widget, char* param);
 extern bool setup_timer(ITUWidget* widget, char* param);
 
+extern bool runOnEnter(ITUWidget* widget, char* param);
+extern bool run_timer(ITUWidget* widget, char* param);
+
 ITUActionFunction actionFunctions[] =
 {
     "LogoOnEnter", LogoOnEnter,
@@ -19,6 +22,9 @@ ITUActionFunction actionFunctions[] =
 
     "setupOnEnter", setupOnEnter,
     "setup_timer", setup_timer,
+
+    "runOnEnter", runOnEnter,
+    "run_timer", run_timer,
 
     NULL, NULL
 };

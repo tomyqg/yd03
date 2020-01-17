@@ -21,6 +21,8 @@ static ITUIcon *roastIcon10, *roastIcon11;
 static ITUIcon *roastIcon20, *roastIcon21;
 static ITUIcon *roastIcon30, *roastIcon31;
 
+static ITULayer* runLayer;
+
 static int setupAnimationKey;
 
 bool setupOnEnter(ITUWidget* widget, char* param)
@@ -44,6 +46,8 @@ bool setupOnEnter(ITUWidget* widget, char* param)
         roastIcon21 = ituSceneFindWidget(&theScene, "roastIcon21"); assert(roastIcon21);
         roastIcon30 = ituSceneFindWidget(&theScene, "roastIcon30"); assert(roastIcon30);
         roastIcon31 = ituSceneFindWidget(&theScene, "roastIcon31"); assert(roastIcon31);
+
+        runLayer = ituSceneFindWidget(&theScene, "runLayer"); assert(runLayer);
     }
 
     setupAnimationKey = setupAnimation->keyframe;
@@ -105,7 +109,11 @@ bool setup_timer(ITUWidget* widget, char* param)
         pre1 = level1;
         ituSpriteGoto(setupSprite, pre1 % 2);
 
-        switch (pre1 % 2) {
+#ifdef WIN32
+        pre1 = 2;
+#endif
+
+        switch (pre1 % 3) {
         case 0:
             f1 = fopen(CFG_PUBLIC_DRIVE ":/setup/steam_std.png", "rb");
             f2 = fopen(CFG_PUBLIC_DRIVE ":/setup/steam_setup.png", "rb");
@@ -117,8 +125,10 @@ bool setup_timer(ITUWidget* widget, char* param)
             f2 = fopen(CFG_PUBLIC_DRIVE ":/setup/roast_setup.png", "rb");
             f3 = fopen(CFG_PUBLIC_DRIVE ":/setup/roast_cursor.png", "rb");
             ituTextSetString(setupModelText, mode_text[1]);
-        default:
             break;
+        default:
+            ituLayerGoto(runLayer);
+            return false;
         }
         load(f1, setupModelIcon);
         load(f3, setupIcon);
