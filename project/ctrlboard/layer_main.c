@@ -82,11 +82,10 @@ bool main_timer(ITUWidget* widget, char* param)
     FILE *fu, *fd;
     char *mode_text[3] = {"专业模式", "智能菜单", "厨房助手"};
 
+#ifdef WIN32
     static int cnt;
     if (++cnt < 15) return false;
     cnt = 0;
-
-#ifdef WIN32
     level0--;
 #else
     if (level1)
@@ -128,8 +127,11 @@ bool main_timer(ITUWidget* widget, char* param)
     load(fu, &mainTopBackgroundBig->icon, &mainTopBackgroundMid->icon);
     load(fd, &mainBotBackgroundBig->icon, &mainBotBackgroundMid->icon);
 
-    ituAnimationStop(mainTopAnimation); ituAnimationStop(mainBotAnimation);
-    ituAnimationStop(topBackAnimation); ituAnimationStop(botBackAnimation);
+    ituAnimationGoto(mainTopAnimation, 0); ituAnimationGoto(mainBotAnimation, 0);
+    ituAnimationGotoFrame(mainTopAnimation, 0); ituAnimationGotoFrame(mainBotAnimation, 0);
+    /* ituAnimationGoto(topBackAnimation, 0); ituAnimationGoto(botBackAnimation, 0); */
+    /* ituAnimationGotoFrame(topBackAnimation, 0); ituAnimationGotoFrame(botBackAnimation, 0); */
+
     if (pre < level0) {
         ituAnimationPlay(mainTopAnimation, 0); ituAnimationPlay(mainBotAnimation, 0);
     } else {
